@@ -2,10 +2,10 @@
 import { HeaderOnly } from '~/components/Layouts'
 
 // Page
-import Home from '~/components/pages/Home'
-import Following from '~/components/pages/Following'
-import Profile from '~/components/pages/Profile'
-import Upload from '~/components/pages/Upload'
+import Home from '~/pages/Home'
+import Following from '~/pages/Following'
+import Profile from '~/pages/Profile'
+import Upload from '~/pages/Upload'
 
 export const publicRoutes = [
     {

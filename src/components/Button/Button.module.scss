@@ -1,0 +1,63 @@
+.wrapper {
+    min-width: 100px;
+    min-height: 36px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background-color: var(--white);
+    cursor: pointer;
+    user-select: none;
+
+    + .wrapper {
+        margin-left: 16px;
+    }
+
+    &.disable {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+// Button Type
+.primary {
+    color: var(--white);
+    background-color: var(--primary);
+
+    &:hover {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+    }
+}
+
+.outline {
+    color: var(--primary);
+    // border-color: var(--primary);
+    border: 1px solid var(--primary);
+
+    &:hover {
+        background-color: rgba(254, 44, 85, 0.06);
+    }
+}
+
+.text {
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// Button Disable
+
+// Button Size
+.small {
+    min-width: 88px;
+    min-height: 28px;
+    padding: 0 10px;
+}
+
+.large {
+    min-width: 164px;
+}
+
+.exlarge {
+    min-width: 208px;
+}
