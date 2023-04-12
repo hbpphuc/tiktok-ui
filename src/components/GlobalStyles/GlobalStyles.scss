@@ -10,6 +10,7 @@
     // Default Layout
     --default-layout-header-height: 60px;
     --default-layout-width: 1150px;
+    --default-layout-horizontal-spacer: 24px;
 }
 
 * {
@@ -21,12 +22,29 @@
 
 html {
     font-size: 62.5%;
+
+    &::-webkit-scrollbar {
+        border-radius: 0px;
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(22, 24, 35, 0.06);
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 0px;
+        background-color: rgba(0, 0, 0, 0);
+    }
 }
 
 body {
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
+    overscroll-behavior: contain;
+    -webkit-font-smoothing: antialiased;
 }
 
 a[href] {

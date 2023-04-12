@@ -47,6 +47,7 @@ function Button({
         [className]: className,
         primary,
         outline,
+        outline,
         text,
         disable,
         rounded,

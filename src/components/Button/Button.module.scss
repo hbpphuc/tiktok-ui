@@ -28,6 +28,12 @@
     margin-left: 8px;
 }
 
+.icon {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
 // Button Type
 .rounded {
     border-radius: 9999px;
@@ -67,8 +73,16 @@
     }
 }
 
-.text-grey {
-    color: rgba(22, 24, 35, 0.75);
+// .text-grey {
+//     color: rgba(22, 24, 35, 0.75);
+// }
+
+.outline-grey {
+    border-color: rgba(22, 24, 35, 0.12);
+
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.03);
+    }
 }
 
 // Button Size
