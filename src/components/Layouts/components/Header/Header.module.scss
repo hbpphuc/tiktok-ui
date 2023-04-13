@@ -120,6 +120,7 @@
     padding: 2px 3px 0px 3px;
     margin-left: 16px;
     cursor: pointer;
+    position: relative;
 }
 
 .user-avatar {
@@ -141,4 +142,19 @@
     margin-left: 16px;
     padding: 0 4px;
     background-color: transparent;
+}
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    padding: 0px 6px;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    font-family: var(--font-family);
+    background-color: var(--primary);
 }
