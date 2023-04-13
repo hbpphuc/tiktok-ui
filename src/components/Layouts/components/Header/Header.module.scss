@@ -115,15 +115,17 @@
 }
 
 .action-btn {
-    font-size: 2.2rem;
     color: rgb(22, 24, 35);
     background-color: transparent;
-    padding: 4px 8px;
+    padding: 2px 3px 0px 3px;
+    margin-left: 16px;
     cursor: pointer;
 }
 
 .user-avatar {
-    padding-left: 8px;
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
     cursor: pointer;
 
     img {
@@ -136,7 +138,7 @@
 
 .more-btn {
     font-size: 2rem;
-    margin-left: 12px;
-    padding: 0 16px;
+    margin-left: 16px;
+    padding: 0 4px;
     background-color: transparent;
 }

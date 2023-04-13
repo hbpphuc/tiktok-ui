@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faPaperPlane, faUser } from '@fortawesome/free-regular-svg-icons'
+import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import {
-    faCircleXmark,
-    faSpinner,
-    faMagnifyingGlass,
-    faPlus,
-    faEllipsisVertical,
-    faEarthAsia,
-    faCircleQuestion,
-    faKeyboard,
-    faCloudUpload,
-    faGear,
-    faArrowRightFromBracket,
-} from '@fortawesome/free-solid-svg-icons'
+    MailboxIcon,
+    MessageIcon,
+    UserIcon,
+    TiktokCoinIcon,
+    SettingIcon,
+    LanguageIcon,
+    QuestionIcon,
+    KeyboardIcon,
+    MoonIcon,
+    LogoutIcon,
+    MoreIcon,
+    PlusIcon,
+} from '~/components/Icons'
 
 import classNames from 'classnames/bind'
 import Tippy from '@tippyjs/react'
@@ -27,13 +28,13 @@ import styles from './Header.module.scss'
 import images from '~/assets/images'
 import AccountItem from '~/components/AccountItem'
 import Menu from '~/components/Popper/Menu'
-import { faTiktok } from '@fortawesome/free-brands-svg-icons'
+import Image from '~/components/Image'
 
 const cx = classNames.bind(styles)
 
 const MENU_ITEMS = [
     {
-        icon: <FontAwesomeIcon icon={faEarthAsia} />,
+        icon: <LanguageIcon />,
         title: 'Tiếng Việt',
         children: {
             title: 'Language',
@@ -45,12 +46,12 @@ const MENU_ITEMS = [
         },
     },
     {
-        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        icon: <QuestionIcon />,
         title: 'Phản hồi và trợ giúp',
         to: '/feedback',
     },
     {
-        icon: <FontAwesomeIcon icon={faKeyboard} />,
+        icon: <KeyboardIcon />,
         title: 'Phím tắt trên bàn phím',
     },
 ]
@@ -72,23 +73,23 @@ function Header() {
 
     const userMenu = [
         {
-            icon: <FontAwesomeIcon icon={faUser} />,
+            icon: <UserIcon />,
             title: 'Xem hồ sơ',
             to: '/feedback',
         },
         {
-            icon: <FontAwesomeIcon icon={faTiktok} />,
+            icon: <TiktokCoinIcon />,
             title: 'Nhận xu',
             to: '/feedback',
         },
         {
-            icon: <FontAwesomeIcon icon={faGear} />,
+            icon: <SettingIcon />,
             title: 'Cài đặt',
             to: '/feedback',
         },
         ...MENU_ITEMS,
         {
-            icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
+            icon: <LogoutIcon />,
             title: 'Đăng xuất',
             to: '/feedback',
             separate: true,
@@ -99,7 +100,7 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={images.logo} alt="Tiktok"></img>
+                    <Image src={images.logo} alt="Tiktok" />
                 </div>
 
                 <HeadlessTippy
@@ -128,19 +129,19 @@ function Header() {
                 </HeadlessTippy>
 
                 <div className={cx('actions')}>
-                    <Button className={cx('outline-grey')} leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                    <Button className={cx('outline-grey')} leftIcon={<PlusIcon />}>
                         Tải lên
                     </Button>
                     {currentUser ? (
                         <>
                             <Tippy delay={(0, 200)} content={'Tin nhắn'} placement="bottom">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faPaperPlane} />
+                                    <MessageIcon />
                                 </button>
                             </Tippy>
                             <Tippy delay={(0, 200)} content={'Hộp thư'} placement="bottom">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faEnvelope} />
+                                    <MailboxIcon />
                                 </button>
                             </Tippy>
                         </>
@@ -152,14 +153,14 @@ function Header() {
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
                             <div className={cx('user-avatar')}>
-                                <img
+                                <Image
                                     src="https://p16-sign-va.tiktokcdn.com/musically-maliva-obj/1653272836951046~c5_100x100.jpeg?x-expires=1681376400&x-signature=HM5kO5pSvEmPwld0iZVbD%2BSkWDo%3D"
                                     alt="avatar"
                                 />
                             </div>
                         ) : (
                             <button className={cx('more-btn')}>
-                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                                <MoreIcon />
                             </button>
                         )}
                     </Menu>

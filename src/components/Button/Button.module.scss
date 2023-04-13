@@ -80,6 +80,10 @@
 .outline-grey {
     border-color: rgba(22, 24, 35, 0.12);
 
+    span {
+        height: 20px;
+    }
+
     &:hover {
         background-color: rgba(22, 24, 35, 0.03);
     }
