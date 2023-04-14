@@ -29,9 +29,15 @@
     padding-bottom: 8px;
 }
 
+.menu-scroll {
+    overflow-y: auto;
+    max-height: 100%;
+}
+
 // Menu lv2
 .header-menu {
     position: relative;
+    flex-shrink: 0;
     height: 50px;
     margin-top: -8px;
 }

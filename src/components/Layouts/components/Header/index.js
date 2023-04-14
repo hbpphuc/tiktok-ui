@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
@@ -17,6 +18,7 @@ import {
     PlusIcon,
 } from '~/components/Icons'
 
+import routesConfig from '~/config/routes'
 import Button from '~/components/Button'
 import Menu from '~/components/Popper/Menu'
 import Search from '../Search'
@@ -86,9 +88,9 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('logo')}>
+                <Link to={routesConfig.home} className={cx('logo')}>
                     <Image src={images.logo} alt="Tiktok" />
-                </div>
+                </Link>
 
                 <Search />
 

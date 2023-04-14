@@ -11,7 +11,7 @@
     padding: 0 var(--default-layout-horizontal-spacer);
     display: flex;
     position: relative;
-    top: var(--default-layout-header-height);
+    margin-top: var(--default-layout-header-height);
 }
 
 .content {
