@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import Tippy from '@tippyjs/react/headless'
 import 'tippy.js/dist/svg-arrow.css'
@@ -43,7 +44,7 @@ function Menu({ children, hideOnClick = false, items = [], onChange = defaultFn 
                     <PopperWrapper className={cx('menu-popper')}>
                         {history.length > 1 && (
                             <HeaderMenu
-                                title={'Language'}
+                                title={current.title}
                                 onBack={() => {
                                     setHistory((prev) => prev.slice(0, prev.length - 1))
                                 }}
@@ -61,6 +62,13 @@ function Menu({ children, hideOnClick = false, items = [], onChange = defaultFn 
             {children}
         </Tippy>
     )
+}
+
+Menu.propTypes = {
+    children: PropTypes.node.isRequired,
+    hideOnClick: PropTypes.bool,
+    items: PropTypes.array,
+    onChange: PropTypes.func,
 }
 
 export default Menu
