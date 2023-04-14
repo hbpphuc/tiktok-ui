@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { SearchIcon } from '~/components/Icons'
 
+import * as searchService from '~/apiServices/searchService'
 import AccountItem from '~/components/AccountItem'
 import { Wrapper as PopperWrapper } from '~/components/Popper'
 import { useDebounce } from '~/hooks'
@@ -29,18 +30,15 @@ function Search() {
             setSearchResult([])
             return
         }
-        setLoading(true)
-        fetch(`https://dummyjson.com/users/search?q=${encodeURIComponent(debounced)}`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.users)
-                setLoading(false)
-            })
-            .catch(() => {
-                setLoading(false)
-            })
 
-        return () => {}
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await searchService.search(debounced)
+            setSearchResult(result)
+            setLoading(false)
+        }
+
+        fetchApi()
     }, [debounced])
 
     const handleHideSearchResult = () => {
