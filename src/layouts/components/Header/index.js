@@ -18,7 +18,7 @@ import {
     PlusIcon,
 } from '~/components/Icons'
 
-import routesConfig from '~/config/routes'
+import config from '~/config'
 import Button from '~/components/Button'
 import Menu from '~/components/Popper/Menu'
 import Search from '../Search'
@@ -64,23 +64,26 @@ function Header() {
         {
             icon: <UserIcon />,
             title: 'Xem hồ sơ',
-            to: '/feedback',
+            to: '/profile',
         },
         {
             icon: <TiktokCoinIcon />,
             title: 'Nhận xu',
-            to: '/feedback',
+            to: '/takecoin',
         },
         {
             icon: <SettingIcon />,
             title: 'Cài đặt',
-            to: '/feedback',
+            to: '/setting',
         },
         ...MENU_ITEMS,
         {
+            icon: <MoonIcon />,
+            title: 'Chế độ tối',
+        },
+        {
             icon: <LogoutIcon />,
             title: 'Đăng xuất',
-            to: '/feedback',
             separate: true,
         },
     ]
@@ -88,7 +91,7 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <Link to={routesConfig.home} className={cx('logo')}>
+                <Link to={config.routes.home} className={cx('logo')}>
                     <Image src={images.logo} alt="Tiktok" />
                 </Link>
 
