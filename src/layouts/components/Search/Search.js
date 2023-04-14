@@ -6,7 +6,7 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { SearchIcon } from '~/components/Icons'
 
 import * as searchService from '~/services/searchService'
-import AccountItem from '~/components/AccountItem'
+import AccountList from '~/components/AccountList'
 import { Wrapper as PopperWrapper } from '~/components/Popper'
 import { useDebounce } from '~/hooks'
 
@@ -18,28 +18,28 @@ const cx = classNames.bind(styles)
 function Search() {
     const [searchValue, setSearchValue] = useState('')
     const [searchResult, setSearchResult] = useState([])
-    const [showResult, setShowResult] = useState(true)
+    const [showResult, setShowResult] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    const debounced = useDebounce(searchValue, 700)
+    const debouncedValue = useDebounce(searchValue, 700)
 
     const searchInputRef = useRef()
 
     useEffect(() => {
-        if (!debounced.trim()) {
+        if (!debouncedValue.trim()) {
             setSearchResult([])
             return
         }
 
         const fetchApi = async () => {
             setLoading(true)
-            const result = await searchService.search(debounced)
+            const result = await searchService.search(debouncedValue)
             setSearchResult(result)
             setLoading(false)
         }
 
         fetchApi()
-    }, [debounced])
+    }, [debouncedValue])
 
     const handleHideSearchResult = () => {
         setShowResult(false)
@@ -56,22 +56,22 @@ function Search() {
         if (!searchValue.startsWith(' ')) setSearchValue(searchValue)
     }
 
+    const renderSearchResult = (attrs) => (
+        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+            <PopperWrapper>
+                <h4 className={cx('search-title')}>Accounts</h4>
+                <AccountList searchResult={searchResult} />
+            </PopperWrapper>
+        </div>
+    )
+
     return (
         //
         <div>
             <HeadlessTippy
                 interactive
                 visible={showResult && searchResult.length > 0}
-                render={(attrs) => (
-                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                        <PopperWrapper>
-                            <h4 className={cx('search-title')}>Accounts</h4>
-                            {searchResult.map((result) => (
-                                <AccountItem key={result.id} data={result} />
-                            ))}
-                        </PopperWrapper>
-                    </div>
-                )}
+                render={renderSearchResult}
                 onClickOutside={handleHideSearchResult}
             >
                 <div className={cx('search')}>
