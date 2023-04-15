@@ -1,10 +1,10 @@
 import * as httpRequest from '~/utils/httpRequest'
 
-export const search = async (q, limit = 5) => {
+export const getSuggested = async ({ skip, limit }) => {
     try {
-        const res = await httpRequest.get('users/search', {
+        const res = await httpRequest.get('users/', {
             params: {
-                q,
+                skip,
                 limit,
             },
         })

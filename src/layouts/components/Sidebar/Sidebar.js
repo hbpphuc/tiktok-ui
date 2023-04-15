@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
-import config from '~/config'
 import Menu, { MenuItem } from './Menu'
+import config from '~/config'
+import * as userService from '~/services/userService'
 import {
     FollowingActiveIcon,
     FollowingIcon,
@@ -10,10 +12,29 @@ import {
     LiveIcon,
 } from '~/components/Icons'
 import styles from './Sidebar.module.scss'
+import SuggestedAccounts from '~/components/SuggestedAccounts'
 
 const cx = classNames.bind(styles)
 
+const LIMIT_ACCOUNT = 5
+
 function Sidebar() {
+    const [skip, setSKip] = useState(0)
+    const [suggestedUser, setSuggestedUser] = useState([])
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const result = await userService.getSuggested({ skip, limit: LIMIT_ACCOUNT })
+            setSuggestedUser(result)
+        }
+
+        fetchApi()
+    }, [skip])
+
+    const handleSeeOther = () => {
+        setSKip(skip + 5)
+    }
+
     return (
         <aside className={cx('wrapper')}>
             <Menu>
@@ -29,8 +50,14 @@ function Sidebar() {
                     icon={<FollowingIcon />}
                     activeIcon={<FollowingActiveIcon />}
                 />
-                <MenuItem title="Live" to={config.routes.live} icon={<LiveIcon />} activeIcon={<LiveActiveIcon />} />
+                <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon />} activeIcon={<LiveActiveIcon />} />
             </Menu>
+            <SuggestedAccounts
+                label="Tài khoản được đề xuất"
+                suggestedUser={suggestedUser}
+                onSeeOther={handleSeeOther}
+            />
+            <SuggestedAccounts label="Các tài khoản đang follow" />
         </aside>
     )
 }
