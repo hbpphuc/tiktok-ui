@@ -5,7 +5,11 @@ import AccountItem from './AccountItem'
 
 const cx = classNames.bind(styles)
 
-function SuggestedAccounts({ label, suggestedUser = [], onSeeOther }) {
+const LIMIT_USER = 10
+
+function SuggestedAccounts({ label, suggestedUser = [], onSeeMoreAccount, onSeeLessAccount }) {
+    const countUser = suggestedUser.length
+
     return (
         <div className={cx('wrapper')}>
             <h2 className={cx('label')}>{label}</h2>
@@ -14,9 +18,15 @@ function SuggestedAccounts({ label, suggestedUser = [], onSeeOther }) {
                 <AccountItem key={user.id} data={user} />
             ))}
 
-            <p className={cx('see-all')} onClick={onSeeOther}>
-                Tài khoản khác
-            </p>
+            {LIMIT_USER !== countUser ? (
+                <p className={cx('see-all')} onClick={onSeeMoreAccount}>
+                    Xem thêm
+                </p>
+            ) : (
+                <p className={cx('see-all')} onClick={onSeeLessAccount}>
+                    Ẩn bớt
+                </p>
+            )}
         </div>
     )
 }

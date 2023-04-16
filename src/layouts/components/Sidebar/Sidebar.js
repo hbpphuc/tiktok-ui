@@ -25,14 +25,18 @@ function Sidebar() {
     useEffect(() => {
         const fetchApi = async () => {
             const result = await userService.getSuggested({ skip, limit: LIMIT_ACCOUNT })
-            setSuggestedUser(result)
+            setSuggestedUser([...suggestedUser, ...result])
         }
 
         fetchApi()
     }, [skip])
 
-    const handleSeeOther = () => {
+    const handleSeeMoreAccount = () => {
         setSKip(skip + 5)
+    }
+
+    const handleSeeLessAccount = () => {
+        setSuggestedUser(suggestedUser.slice(0, 5))
     }
 
     return (
@@ -55,7 +59,8 @@ function Sidebar() {
             <SuggestedAccounts
                 label="Tài khoản được đề xuất"
                 suggestedUser={suggestedUser}
-                onSeeOther={handleSeeOther}
+                onSeeMoreAccount={handleSeeMoreAccount}
+                onSeeLessAccount={handleSeeLessAccount}
             />
             <SuggestedAccounts label="Các tài khoản đang follow" />
         </aside>
