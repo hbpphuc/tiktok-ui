@@ -1,8 +1,6 @@
 .wrapper {
-    --sidebar-width: 356px;
-
     width: var(--sidebar-width);
     min-height: 1000px;
     padding: 20px 0px 26px 8px;
-    // position: fixed;
+    position: fixed;
 }

@@ -1,14 +1,28 @@
 import * as httpRequest from '~/utils/httpRequest'
 
-export const getSuggested = async ({ skip, limit }) => {
+export const getSuggested = async ({ page, perPage }) => {
     try {
-        const res = await httpRequest.get('users/', {
+        const res = await httpRequest.get('users/suggested', {
             params: {
-                skip,
-                limit,
+                page,
+                per_page: perPage,
             },
         })
-        return res.users
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getFollower = async ({ page }) => {
+    try {
+        const res = await httpRequest.get('me/followings', {
+            params: {
+                page,
+            },
+        })
+        console.log(res.data)
+        return res.data
     } catch (error) {
         console.log(error)
     }

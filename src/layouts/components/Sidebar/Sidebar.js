@@ -16,23 +16,26 @@ import SuggestedAccounts from '~/components/SuggestedAccounts'
 
 const cx = classNames.bind(styles)
 
-const LIMIT_ACCOUNT = 5
+const PAGE_ACCOUNT = 1
+const PERPAGE_ACCOUNT = 5
 
 function Sidebar() {
-    const [skip, setSKip] = useState(0)
+    const [page, setPage] = useState(PAGE_ACCOUNT)
     const [suggestedUser, setSuggestedUser] = useState([])
+
+    const suggestedUserList = [...suggestedUser]
 
     useEffect(() => {
         const fetchApi = async () => {
-            const result = await userService.getSuggested({ skip, limit: LIMIT_ACCOUNT })
-            setSuggestedUser([...suggestedUser, ...result])
+            const result = await userService.getSuggested({ page, perPage: PERPAGE_ACCOUNT })
+            setSuggestedUser([...suggestedUserList, ...result])
         }
 
         fetchApi()
-    }, [skip])
+    }, [page])
 
     const handleSeeMoreAccount = () => {
-        setSKip(skip + 5)
+        setPage(page + 1)
     }
 
     const handleSeeLessAccount = () => {

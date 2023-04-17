@@ -9,21 +9,16 @@ import styles from './AccountItem.module.scss'
 const cx = classNames.bind(styles)
 
 function AccountItem({ data }) {
-    const fullName = `${data.firstName} ${data.lastName}`
-
-    // Fake tick
-    data.tick = true
-
     return (
-        <Link to={`/@${data.username}`} className={cx('wrapper')}>
-            <Image className={cx('avatar')} src={data.image} alt={fullName} />
+        <Link to={`/@${data.nickname}`} className={cx('wrapper')}>
+            <Image className={cx('avatar')} src={data.avatar} alt={data.nickname} />
             <div className={cx('info')}>
                 <h4 className={cx('name')}>
-                    <span>{fullName}</span>
+                    <span>{`${data.first_name} ${data.last_name}`}</span>
                     {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
                 </h4>
 
-                <span className={cx('username')}>{data.username}</span>
+                <span className={cx('username')}>{data.nickname}</span>
             </div>
         </Link>
     )

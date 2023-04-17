@@ -13,8 +13,6 @@ import styles from './SuggestedAccounts.module.scss'
 const cx = classNames.bind(styles)
 
 function AccountItem({ data }) {
-    const fullName = `${data.firstName} ${data.lastName}`
-
     const renderPreview = (props) => {
         return (
             <div tabIndex="-1" {...props}>
@@ -28,13 +26,13 @@ function AccountItem({ data }) {
     return (
         <Tippy interactive delay={[1000, 0]} render={renderPreview} placement={'bottom-start'} offset={[-8, 2]}>
             <Link to={'/profile'} className={cx('account-item')}>
-                <Image src={data.image} alt={fullName} className={cx('avatar')} />
+                <Image src={data.avatar} alt={data.nickname} className={cx('avatar')} />
                 <div className={cx('info')}>
                     <h4 className={cx('name')}>
-                        <span>{fullName}</span>
-                        {true && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
+                        <span>{`${data.first_name} ${data.last_name}`}</span>
+                        {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
                     </h4>
-                    <span className={cx('username')}>{data.username}</span>
+                    <span className={cx('username')}>{data.nickname}</span>
                 </div>
             </Link>
         </Tippy>

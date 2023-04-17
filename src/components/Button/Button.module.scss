@@ -1,6 +1,6 @@
 .wrapper {
-    min-width: 100px;
-    min-height: 36px;
+    width: 100px;
+    height: 36px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -68,15 +68,30 @@
 }
 
 .text {
+    width: fit-content;
+    height: auto;
+    padding: 0;
     &:hover {
         text-decoration: underline;
     }
 }
 
-// .text-grey {
-//     color: rgba(22, 24, 35, 0.75);
-// }
+// Button Size
+.small {
+    width: 88px;
+    height: 28px;
+    padding: 0 10px;
+}
 
+.large {
+    width: 164px;
+}
+
+.exlarge {
+    width: 208px;
+}
+
+// Custom button
 .outline-grey {
     border-color: rgba(22, 24, 35, 0.12);
 
@@ -89,17 +104,7 @@
     }
 }
 
-// Button Size
-.small {
-    min-width: 88px;
-    min-height: 28px;
-    padding: 0 10px;
-}
-
-.large {
-    min-width: 164px;
-}
-
-.exlarge {
-    min-width: 208px;
+.hashtag {
+    margin-left: 0 !important;
+    padding: 0;
 }

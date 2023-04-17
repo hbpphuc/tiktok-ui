@@ -1,0 +1,5 @@
+.wrapper {
+    width: calc(100% - var(--sidebar-width));
+    position: absolute;
+    left: var(--sidebar-width);
+}
