@@ -16,7 +16,9 @@ const useElementOnScreen = (options, targetRef) => {
         const observer = new IntersectionObserver(callbackFunction, optionsMemo)
         const currentTarget = targetRef.current
 
-        if (currentTarget) observer.observe(currentTarget)
+        if (currentTarget) {
+            observer.observe(currentTarget)
+        }
 
         return () => {
             if (currentTarget) observer.unobserve(currentTarget)

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, memo } from 'react'
+import { useEffect, useRef, useState, memo, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
@@ -15,16 +15,21 @@ const cx = classNames.bind(styles)
 
 function Video({ data }) {
     const [playing, setPlaying] = useState(false)
+    const [muted, setMuted] = useState(true)
+    const [volume, setVolume] = useState(0)
     const videoRef = useRef(null)
-    const videoBtnRef = useRef(null)
+    const volumeInputRef = useRef()
+    const muteBtnRef = useRef()
     let options = {
         root: null,
         rootMargin: '0px',
         threshold: 0.5,
     }
+
     const isVisibile = useElementOnScreen(options, videoRef)
 
-    const onVideoClick = () => {
+    const onPlayVideo = (e) => {
+        e.stopPropagation()
         if (playing) {
             videoRef.current.pause()
             setPlaying(!playing)
@@ -32,6 +37,30 @@ function Video({ data }) {
             videoRef.current.play()
             setPlaying(!playing)
         }
+    }
+
+    useEffect(() => {
+        const muteBtnNode = muteBtnRef.current
+
+        const onToggleVolume = (e) => {
+            e.stopPropagation()
+            return muted ? setMuted(videoRef.current.volume - 1) : setMuted(videoRef.current.volume + 1)
+        }
+
+        muteBtnNode.addEventListener('click', onToggleVolume)
+
+        return () => {
+            muteBtnNode.removeEventListener('click', onToggleVolume)
+        }
+    }, [muted])
+
+    const handleChangeVolume = (e) => {
+        console.log(e.target)
+        e.stopPropagation()
+    }
+
+    const onVideoClick = () => {
+        console.log(videoRef.current)
     }
 
     useEffect(() => {
@@ -46,6 +75,7 @@ function Video({ data }) {
                 setPlaying(false)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisibile])
 
     return (
@@ -61,7 +91,7 @@ function Video({ data }) {
                             </h4>
                         </Link>
                         <p className={cx('video-desc')}>
-                            {data.user.description}
+                            {data.description}
                             <Button to="/" text className={cx('hashtag')}>
                                 #trending
                             </Button>
@@ -82,27 +112,32 @@ function Video({ data }) {
                 </div>
                 <div className={cx('content')}>
                     <div className={cx('video-card')}>
-                        <video
-                            src={data.file_url}
-                            autoPlay
-                            loop
-                            muted={false}
-                            className={cx('video-player')}
-                            ref={videoRef}
-                        />
-                        <div className={cx('video-btn')} ref={videoBtnRef} onClick={onVideoClick}>
-                            <Button>
-                                <FontAwesomeIcon icon={faPlay} />
-                            </Button>
-                            <Button>
-                                <PauseIcon />
-                            </Button>
-                            <Button>
-                                <MutedIcon />
-                            </Button>
-                            <Button>
-                                <UnMutedIcon />
-                            </Button>
+                        <video src={data.file_url} loop muted={muted} className={cx('video-player')} ref={videoRef} />
+                        <div className={cx('video-coating')} onClick={onVideoClick}>
+                            <div className={cx('player-wrap')}>
+                                <button className={cx('player-btn')} onClick={onPlayVideo}>
+                                    {!playing ? <FontAwesomeIcon icon={faPlay} /> : <PauseIcon />}
+                                </button>
+                            </div>
+                            <div className={cx('volume-wrap')}>
+                                {muted && (
+                                    <div className={cx('volume')}>
+                                        <input
+                                            ref={volumeInputRef}
+                                            value={volume}
+                                            type={'range'}
+                                            step={1}
+                                            min={0}
+                                            max={100}
+                                            className={cx('volume-input')}
+                                            onChange={handleChangeVolume}
+                                        />
+                                    </div>
+                                )}
+                                <button className={cx('volume-btn')} ref={muteBtnRef}>
+                                    {muted ? <MutedIcon /> : <UnMutedIcon />}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div className={cx('video-action')}></div>

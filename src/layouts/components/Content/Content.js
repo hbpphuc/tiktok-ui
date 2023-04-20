@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as videoService from '~/services/videoService'
 import classNames from 'classnames/bind'
 import Video from '~/components/Video'
@@ -8,7 +8,7 @@ const cx = classNames.bind(styles)
 
 function Content() {
     const [videos, setVideo] = useState([])
-    const contentRef = useRef()
+
     // const randomNumber = Math.floor(Math.random() * 20)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function Content() {
     }, [])
 
     return (
-        <div className={cx('wrapper')} ref={contentRef}>
+        <div className={cx('wrapper')}>
             {videos.map((video) => (
                 <Video key={video.id} data={video} />
             ))}
