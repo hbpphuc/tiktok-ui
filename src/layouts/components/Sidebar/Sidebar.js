@@ -16,7 +16,7 @@ import SuggestedAccounts from '~/components/SuggestedAccounts'
 
 const cx = classNames.bind(styles)
 
-const PAGE_ACCOUNT = 1
+const PAGE_ACCOUNT = 2
 const PERPAGE_ACCOUNT = 5
 
 function Sidebar() {

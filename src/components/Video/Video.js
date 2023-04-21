@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMusic, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faCommentDots, faHeart, faMusic, faPlay, faShare } from '@fortawesome/free-solid-svg-icons'
 
-import { useElementOnScreen } from '~/hooks'
+import { useDebounce, useElementOnScreen } from '~/hooks'
 import Button from '../Button'
 import { MutedIcon, PauseIcon, UnMutedIcon } from '../Icons'
 import Image from '../Image'
@@ -25,6 +25,7 @@ function Video({ data }) {
         rootMargin: '0px',
         threshold: 0.5,
     }
+    const debouncedValue = useDebounce(volume, 500)
 
     const isVisibile = useElementOnScreen(options, videoRef)
 
@@ -41,23 +42,51 @@ function Video({ data }) {
 
     useEffect(() => {
         const muteBtnNode = muteBtnRef.current
+        const videoNode = videoRef.current
 
         const onToggleVolume = (e) => {
             e.stopPropagation()
-            return muted ? setMuted(videoRef.current.volume - 1) : setMuted(videoRef.current.volume + 1)
+            // if (muted) {
+            //     setVolume(1)
+            //     setMuted(false)
+            // } else {
+            //     setVolume(0)
+            //     setMuted(true)
+            // }
+            return muted ? setMuted(false) : setMuted(true)
         }
 
         muteBtnNode.addEventListener('click', onToggleVolume)
+        // videoNode.volume = volume
 
         return () => {
             muteBtnNode.removeEventListener('click', onToggleVolume)
         }
     }, [muted])
 
-    const handleChangeVolume = (e) => {
-        console.log(e.target)
+    // Handle Change Volume Event
+
+    const handleChangeValue = (e) => {
         e.stopPropagation()
+        setVolume(e.target.value)
     }
+
+    // useEffect(() => {
+    //     const videoNode = videoRef.current
+
+    //     const handleChangeVolume = () => {
+    //         if (muted) {
+    //             videoNode.volume = 0
+    //         } else {
+    //             videoNode.volume = volume
+    //         }
+    //     }
+    //     videoNode.addEventListener('volumechange', handleChangeVolume)
+
+    //     return () => {
+    //         videoNode.removeEventListener('volumechange', handleChangeVolume)
+    //     }
+    // }, [debouncedValue])
 
     const onVideoClick = () => {
         console.log(videoRef.current)
@@ -119,18 +148,18 @@ function Video({ data }) {
                                     {!playing ? <FontAwesomeIcon icon={faPlay} /> : <PauseIcon />}
                                 </button>
                             </div>
-                            <div className={cx('volume-wrap')}>
-                                {muted && (
+                            <div className={cx('volume-wrap')} onClick={(e) => e.stopPropagation()}>
+                                {false && (
                                     <div className={cx('volume')}>
                                         <input
                                             ref={volumeInputRef}
                                             value={volume}
                                             type={'range'}
-                                            step={1}
+                                            step={0.01}
                                             min={0}
-                                            max={100}
+                                            max={1}
                                             className={cx('volume-input')}
-                                            onChange={handleChangeVolume}
+                                            onChange={handleChangeValue}
                                         />
                                     </div>
                                 )}
@@ -140,7 +169,26 @@ function Video({ data }) {
                             </div>
                         </div>
                     </div>
-                    <div className={cx('video-action')}></div>
+                    <div className={cx('video-action')}>
+                        <div className={cx('action')}>
+                            <Button circle>
+                                <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                            </Button>
+                            <span className={cx('count')}>{data.likes_count}</span>
+                        </div>
+                        <div className={cx('action')}>
+                            <Button circle>
+                                <FontAwesomeIcon icon={faCommentDots} className={cx('icon')} />
+                            </Button>
+                            <span className={cx('count')}>{data.comments_count}</span>
+                        </div>
+                        <div className={cx('action')}>
+                            <Button circle>
+                                <FontAwesomeIcon icon={faShare} className={cx('icon')} />
+                            </Button>
+                            <span className={cx('count')}>{data.shares_count}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
