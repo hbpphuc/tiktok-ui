@@ -1,5 +1,6 @@
 .wrapper {
     width: calc(100% - var(--sidebar-width));
+    height: calc(100vh - var(--default-layout-header-height));
     position: absolute;
     left: var(--sidebar-width);
 }

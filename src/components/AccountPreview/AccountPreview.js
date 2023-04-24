@@ -9,14 +9,20 @@ import styles from './AccountPreview.module.scss'
 
 const cx = classNames.bind(styles)
 
-function AccountPreview({ data }) {
+function AccountPreview({ data, props = '' }) {
     return (
         <div className={cx('wrapper')}>
             <header className={cx('header')}>
                 <Image src={data.avatar} alt={data.nickname} className={cx('avatar')} />
-                <Button primary className={cx('follow-btn')}>
-                    Follow
-                </Button>
+                {props !== 'video' ? (
+                    <Button primary className={cx('follow-btn')}>
+                        Follow
+                    </Button>
+                ) : (
+                    <Button outline className={cx('follow-btn')}>
+                        Follow
+                    </Button>
+                )}
             </header>
             <div className={cx('info')}>
                 <h4 className={cx('username')}>

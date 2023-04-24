@@ -23,6 +23,7 @@ export const publicRoutes = [
     {
         path: config.routes.profile,
         component: Profile,
+        layout: HeaderOnly,
     },
     {
         path: config.routes.upload,

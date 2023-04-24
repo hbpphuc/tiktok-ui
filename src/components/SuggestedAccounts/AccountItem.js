@@ -6,7 +6,7 @@ import Tippy from '@tippyjs/react/headless'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { Wrapper as PopperWrapper } from '~/components/Popper'
-import AccountPreview from './AccountPreview'
+import AccountPreview from '~/components/AccountPreview'
 import Image from '~/components/Image'
 import styles from './SuggestedAccounts.module.scss'
 
@@ -25,7 +25,7 @@ function AccountItem({ data }) {
 
     return (
         <Tippy interactive delay={[1000, 0]} render={renderPreview} placement={'bottom-start'} offset={[-8, 2]}>
-            <Link to={'/profile'} className={cx('account-item')}>
+            <Link to={`:${data.nickname}`} className={cx('account-item')}>
                 <Image src={data.avatar} alt={data.nickname} className={cx('avatar')} />
                 <div className={cx('info')}>
                     <h4 className={cx('name')}>

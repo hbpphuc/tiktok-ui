@@ -6,7 +6,7 @@ import styles from './Content.module.scss'
 
 const cx = classNames.bind(styles)
 
-function Content() {
+function Content({ reff }) {
     const [videos, setVideo] = useState([])
 
     // const randomNumber = Math.floor(Math.random() * 20)

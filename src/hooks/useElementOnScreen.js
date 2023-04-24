@@ -24,7 +24,6 @@ const useElementOnScreen = (options, targetRef) => {
             if (currentTarget) observer.unobserve(currentTarget)
         }
     }, [targetRef, optionsMemo])
-
     return isVisibile
 }
 export default useElementOnScreen
