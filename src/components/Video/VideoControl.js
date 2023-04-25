@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react'
+import PropTypes from 'prop-types'
 import Moment from 'react-moment'
 import moment from 'moment'
 import classNames from 'classnames/bind'
@@ -9,15 +10,14 @@ import styles from './Video.module.scss'
 
 const cx = classNames.bind(styles)
 
-function VideoControl({ data, videoRef, ...props }) {
+function VideoControl({ data, videoRef }) {
     const [playing, setPlaying] = useState(true)
-    const [muted, setMuted] = useState(true)
-    const [volume, setVolume] = useState(0)
+    const [muted, setMuted] = useState(false)
     const [timer, setTimer] = useState(0)
-    const [percent, setPercent] = useState(0)
+    const [progress, setProgress] = useState(0)
 
     const muteBtnRef = useRef()
-    const volumeInputRef = useRef()
+    const volumeRef = useRef()
     const progressRef = useRef()
 
     // const debouncedValue = useDebounce(volume, 500)
@@ -40,67 +40,52 @@ function VideoControl({ data, videoRef, ...props }) {
 
         const onToggleMute = (e) => {
             e.stopPropagation()
-            // if (muted) {
-            //     videoNode.volume = 1
-            //     setMuted(false)
-            // } else {
-            //     videoNode.volume = 0
-            //     setMuted(true)
-            // }
             return muted ? setMuted(false) : setMuted(true)
         }
 
+        videoNode.muted = muted
         muteBtnNode.addEventListener('click', onToggleMute)
-        // videoNode.addEventListener('volumechange', onToggleMute)
-        // videoNode.volume = volume
 
         return () => {
             muteBtnNode.removeEventListener('click', onToggleMute)
-            // videoNode.removeEventListener('volumechange', onToggleMute)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [muted])
-
-    //    useEffect(() => {
-    //     const videoNode = videoRef.current
-
-    //     const handleChangeVolume = () => {
-    //         if (muted) {
-    //             videoNode.volume = 1
-    //         } else {
-    //             videoNode.volume = 0
-    //         }
-    //     }
-    //     videoNode.addEventListener('volumechange', handleChangeVolume)
-
-    //     return () => {
-    //         videoNode.removeEventListener('volumechange', handleChangeVolume)
-    //     }
-    // }, [muted])
-
-    // Handle Change Volume Event
-
-    const handleChangeValue = (e) => {
-        e.stopPropagation()
-        setVolume(e.target.value)
-    }
 
     useEffect(() => {
         const videoNode = videoRef.current
-        const percent = Math.floor((timer / data.meta.playtime_seconds) * 100)
 
         const currentTime = () => {
-            return setTimer(Math.floor(videoNode.currentTime))
+            let current = videoNode.currentTime
+            setTimer(current)
         }
-
-        progressRef.current.value = percent
 
         videoNode.addEventListener('timeupdate', currentTime)
 
         return () => {
             videoNode.removeEventListener('timeupdate', currentTime)
         }
+    }, [])
+
+    const playtime = Math.floor(data.meta.playtime_seconds)
+    const percent = (timer / playtime) * 100
+
+    const handleChangeProgress = (e) => {
+        const seekTime = (e.target.value * data.meta.playtime_seconds) / 100
+        videoRef.current.currentTime = seekTime
+    }
+
+    useEffect(() => {
+        const progressNode = progressRef.current
+        setProgress(percent)
+
+        progressNode.addEventListener('change', handleChangeProgress)
+
+        return () => {
+            progressNode.removeEventListener('change', handleChangeProgress)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [timer])
+    }, [timer, progress])
 
     return (
         <>
@@ -113,14 +98,12 @@ function VideoControl({ data, videoRef, ...props }) {
                 {false && (
                     <div className={cx('volume')}>
                         <input
-                            ref={volumeInputRef}
-                            value={volume}
+                            ref={volumeRef}
+                            className={cx('volume-input')}
                             type={'range'}
                             step={0.01}
                             min={0}
                             max={1}
-                            className={cx('volume-input')}
-                            onChange={handleChangeValue}
                         />
                     </div>
                 )}
@@ -130,7 +113,16 @@ function VideoControl({ data, videoRef, ...props }) {
             </div>
             {true && (
                 <div className={cx('video-control')}>
-                    <input ref={progressRef} className={cx('progress')} type={'range'} min={0} max={100} step={1} />
+                    <input
+                        ref={progressRef}
+                        className={cx('progress')}
+                        value={progress}
+                        type={'range'}
+                        min={0}
+                        max={100}
+                        step={1}
+                        onChange={handleChangeProgress}
+                    />
 
                     <p className={cx('timer')}>
                         <Moment date={start} format="mm:ss" durationFromNow /> / {data.meta.playtime_string}
@@ -139,6 +131,10 @@ function VideoControl({ data, videoRef, ...props }) {
             )}
         </>
     )
+}
+
+VideoControl.propTypes = {
+    data: PropTypes.object.isRequired,
 }
 
 export default memo(VideoControl)

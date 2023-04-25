@@ -25,6 +25,8 @@ import Search from '../Search'
 import Image from '~/components/Image'
 import images from '~/assets/images'
 import styles from './Header.module.scss'
+import { useModal } from '~/hooks'
+import Modal from '~/components/Modal'
 
 const cx = classNames.bind(styles)
 
@@ -53,6 +55,8 @@ const MENU_ITEMS = [
 ]
 
 function Header() {
+    const { isShowing, toggle } = useModal()
+
     let currentUser = false
 
     // handle logic
@@ -117,7 +121,10 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button primary>Đăng nhập</Button>
+                            <Button primary onClick={toggle}>
+                                Đăng nhập
+                            </Button>
+                            <Modal isShowing={isShowing} hide={toggle} />
                         </>
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>

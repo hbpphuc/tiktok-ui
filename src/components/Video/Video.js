@@ -16,11 +16,10 @@ import styles from './Video.module.scss'
 
 const cx = classNames.bind(styles)
 const IS_VIDEO = 'video'
-const VIDEO_MUTED = true
 
 function Video({ data }) {
     const [playing, setPlaying] = useState(false)
-    const [muted, setMuted] = useState(VIDEO_MUTED)
+    const [muted, setMuted] = useState(true)
     const videoRef = useRef(null)
     const videoWrap = useRef()
     let options = {
@@ -31,14 +30,6 @@ function Video({ data }) {
 
     const isVisibile = useElementOnScreen(options, videoWrap)
 
-    // document.addEventListener('visibilitychange', function (event) {
-    //     if (document.hidden) {
-    //         console.log('not visible')
-    //     } else {
-    //         console.log('is visible')
-    //     }
-    // })
-
     const onVideoClick = () => {
         console.log(videoRef.current)
     }
@@ -48,6 +39,7 @@ function Video({ data }) {
             if (!playing) {
                 videoRef.current.play()
                 setPlaying(true)
+                setMuted(false)
             }
         } else {
             if (playing) {
