@@ -1,13 +1,33 @@
 import ReactDOM from 'react-dom'
 import classNames from 'classnames/bind'
 
-import { CloseIcon } from '~/components/Icons'
+import Button from '~/components/Button'
+import { CloseIcon, FacebookIcon, GoogleIcon, PersonIcon, QRCodeIcon } from '~/components/Icons'
 import styles from './Modal.module.scss'
 
 const cx = classNames.bind(styles)
 
-const Modal = ({ isShowing, hide }) =>
-    isShowing
+function Modal({ isShowing, hide }) {
+    const options = [
+        {
+            title: 'Sử dụng mã QR',
+            icon: <QRCodeIcon />,
+        },
+        {
+            title: 'Số điện thoại / Email / Tiktok ID',
+            icon: <PersonIcon />,
+        },
+        {
+            title: 'Tiếp tục với Facebook',
+            icon: <FacebookIcon />,
+        },
+        {
+            title: 'Tiếp tục với Google',
+            icon: <GoogleIcon />,
+        },
+    ]
+
+    return isShowing
         ? ReactDOM.createPortal(
               <>
                   <div className={cx('modal-overlay')} />
@@ -20,7 +40,19 @@ const Modal = ({ isShowing, hide }) =>
                           </div>
                           <div className={cx('modal-content')}>
                               <h2 className={cx('title')}>Đăng nhập vào Tiktok</h2>
-                              <div className={cx('options')}></div>
+                              <div className={cx('options')}>
+                                  {options.map((option, index) => (
+                                      <Button key={index} href="/" leftIcon={option.icon} className={cx('modal-btn')}>
+                                          {option.title}
+                                      </Button>
+                                  ))}
+                              </div>
+                          </div>
+                          <div className={cx('modal-footer')}>
+                              <span>Bạn không có tài khoản?</span>
+                              <Button text className={cx('modal-signup')}>
+                                  Đăng ký
+                              </Button>
                           </div>
                       </div>
                   </div>
@@ -28,5 +60,6 @@ const Modal = ({ isShowing, hide }) =>
               document.body,
           )
         : null
+}
 
 export default Modal
