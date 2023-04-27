@@ -27,3 +27,14 @@ export const getFollower = async ({ page }) => {
         console.log(error)
     }
 }
+
+export const auth = async ({ email, password, config }) => {
+    try {
+        const res = await httpRequest.post('auth/login', JSON.stringify({ email, password }), config)
+        return res.data
+    } catch (error) {
+        if (error.response.status === 401) {
+            console.log('Tài khoản hoặc mật khẩu chưa chính xác')
+        }
+    }
+}

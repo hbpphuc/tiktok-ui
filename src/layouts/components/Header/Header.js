@@ -27,6 +27,8 @@ import images from '~/assets/images'
 import styles from './Header.module.scss'
 import { useModal } from '~/hooks'
 import Modal from '~/components/Modal'
+import { useContext } from 'react'
+import AuthContext from '~/context/AuthProvider'
 
 const cx = classNames.bind(styles)
 
@@ -55,13 +57,16 @@ const MENU_ITEMS = [
 ]
 
 function Header() {
+    const { auth, setAuth } = useContext(AuthContext)
     const { isShowing, toggle } = useModal()
-
-    let currentUser = false
 
     // handle logic
     const handleMenuChange = (menuItem) => {
-        console.log(menuItem)
+        if (menuItem.isLogout === true) {
+            window.localStorage.removeItem('USER_LOGIN')
+            window.location.reload()
+            setAuth(undefined)
+        }
     }
 
     const userMenu = [
@@ -89,6 +94,7 @@ function Header() {
             icon: <LogoutIcon />,
             title: 'Đăng xuất',
             separate: true,
+            isLogout: true,
         },
     ]
 
@@ -105,7 +111,7 @@ function Header() {
                     <Button className={cx('outline-grey')} leftIcon={<PlusIcon />}>
                         Tải lên
                     </Button>
-                    {currentUser ? (
+                    {!!auth ? (
                         <>
                             <Tippy delay={(0, 200)} content={'Tin nhắn'} placement="bottom">
                                 <button className={cx('action-btn')}>
@@ -127,13 +133,10 @@ function Header() {
                             <Modal isShowing={isShowing} hide={toggle} />
                         </>
                     )}
-                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
-                        {currentUser ? (
+                    <Menu items={auth ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {auth ? (
                             <div className={cx('user-avatar')}>
-                                <Image
-                                    src="https://p16-sign-va.tiktokcdn.com/musically-maliva-obj/1653272836951046~c5_100x100.jpeg?x-expires=1681376400&x-signature=HM5kO5pSvEmPwld0iZVbD%2BSkWDo%3D"
-                                    alt="avatar"
-                                />
+                                <Image src={auth.avatar} alt={auth.nickname} />
                             </div>
                         ) : (
                             <button className={cx('more-btn')}>
