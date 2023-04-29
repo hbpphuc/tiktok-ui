@@ -27,7 +27,7 @@ import images from '~/assets/images'
 import styles from './Header.module.scss'
 import { useModal } from '~/hooks'
 import Modal from '~/components/Modal'
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import AuthContext from '~/context/AuthProvider'
 
 const cx = classNames.bind(styles)
@@ -59,6 +59,7 @@ const MENU_ITEMS = [
 function Header() {
     const { auth, setAuth } = useContext(AuthContext)
     const { isShowing, toggle } = useModal()
+    const uploadRef = useRef()
 
     // handle logic
     const handleMenuChange = (menuItem) => {
@@ -108,7 +109,12 @@ function Header() {
                 <Search />
 
                 <div className={cx('actions')}>
-                    <Button className={cx('outline-grey')} leftIcon={<PlusIcon />}>
+                    <Button
+                        ref={uploadRef}
+                        className={cx('outline-grey')}
+                        leftIcon={<PlusIcon />}
+                        to={auth ? '/upload' : ''}
+                    >
                         Tải lên
                     </Button>
                     {!!auth ? (

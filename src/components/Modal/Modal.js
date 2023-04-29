@@ -128,7 +128,7 @@ function Modal({ isShowing, hide }) {
                                       Quên mật khẩu?
                                   </Button>
                                   <Button className={cx('login-btn')}>Đăng nhập</Button>
-                                  <p className={cx('errorMsg')}>* aaaa</p>
+                                  {/* <p className={cx('errorMsg')}>* aaaa</p> */}
                               </form>
                           </div>
                           <div className={cx('modal-footer')}>

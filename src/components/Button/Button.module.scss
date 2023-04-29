@@ -101,6 +101,7 @@
 
 .large {
     width: 164px;
+    height: 48px;
 }
 
 .exlarge {
@@ -188,4 +189,14 @@
     user-select: none;
     cursor: pointer;
     position: relative;
+}
+
+.upload-btn {
+    width: 400px;
+    margin-top: 32px;
+
+    &:hover {
+        border-color: var(--primary);
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+    }
 }

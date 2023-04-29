@@ -1,5 +1,4 @@
 import axios from 'axios'
-import config from '~/config'
 
 const httpRequest = axios.create({ baseURL: process.env.REACT_APP_BASE_URL })
 
