@@ -14,7 +14,7 @@ export const getVideos = async ({ type, page }) => {
     }
 }
 
-export const getVideosPath = async ({ upload_file, config }) => {
+export const postVideo = async ({ upload_file, config }) => {
     try {
         const res = await httpRequest.post('videos', { upload_file }, config)
         console.log(res.data)

@@ -1,0 +1,5 @@
+Đang làm dở phần upload video: 
+    - Phải làm UI phần input phía dưới preview video.
+    - Phải làm logic phần input checkbox sao cho khi check thì thêm phần tử được check vào 1 mảng, bỏ check thì xóa phần tử đó ra khỏi mảng.
+    - Phải làm logic phần select option sao cho khi select phần tử thì phải nhận được phần tử đó, chọn phần tử khác thì set lại state.
+    - Phải làm phần axios post để thêm 1 video mới vào.
